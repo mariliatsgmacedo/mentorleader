@@ -13,7 +13,7 @@ export const Container = styled.main`
 export const Landing = styled.section`
   width: 50%;
   height: 100vh;
-  background:#821284;
+  background: var(--primary-color);
   padding: 1rem;
   font-size: 0.7rem;
 
@@ -31,7 +31,7 @@ export const Landing = styled.section`
   h3 {
     margin-bottom: 1rem;
     font-size: 2rem;
-    color: #f7f7f7;
+    color: var(--light-font-white);
   }
 
   p {
@@ -41,7 +41,7 @@ export const Landing = styled.section`
     letter-spacing: 1.2px;
     font-size: 1rem;
     text-align: center;
-    color: #f7f7f7;
+    color: var(--light-font-white);
   }
 
   @media (max-width: 768px){
@@ -69,7 +69,7 @@ export const Form = styled.form`
   
   p {
     font-size: 1.5rem;
-    color: #363636;
+    color: var(--light-font-dark);
     width: 50%;
     text-align: center;
 
@@ -100,7 +100,7 @@ export const Form = styled.form`
   .buttonEnter {
     border-radius: 4px;
     border: 1px solid #821284;
-    color: #821284;
+    color: var(--primary-color);
     cursor: pointer;
     background: transparent;
   }

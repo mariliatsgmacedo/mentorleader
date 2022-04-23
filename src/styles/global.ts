@@ -5,6 +5,10 @@ export const GlobalStyle = createGlobalStyle`
  :root {
         --background-html: #F0F2F5;
         --primary-color:#821284;
+
+        --light-font-white:#f7f7f7;
+        --light-font-dark:#363636;
+
     }
     * {
         margin: 0;
