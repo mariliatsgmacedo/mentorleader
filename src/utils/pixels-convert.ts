@@ -1,0 +1,1 @@
+export const convert = (size:number, width = 1080) => `${(size / width) * 100}vw`;
