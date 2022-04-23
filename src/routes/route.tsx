@@ -8,18 +8,19 @@ import { PrivateRoute } from "./privateRoute";
 export const GeneralRoutes = () => {
 
     return (
-        
+
         <Router>
-            <Routes>
-                <Route path="/" element={
-                    <PrivateRoute>
-                        <Home/>
-                    </PrivateRoute>
-                }/>
-                <Route path="/login" element={<Login/>}/>
-            </Routes>
-           
+            <div style={{paddingBottom: 50, }}>
+                <Routes>
+                    <Route path="/" element={
+                        <PrivateRoute>
+                            <Home />
+                        </PrivateRoute>
+                    } />
+                    <Route path="/login" element={<Login />} />
+                </Routes>
+            </div>
         </Router>
-        
+
     )
 }

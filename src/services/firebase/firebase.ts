@@ -8,3 +8,4 @@ export const Providers = {
     google: new GoogleAuthProvider()
 }
 export const auth = getAuth();
+
