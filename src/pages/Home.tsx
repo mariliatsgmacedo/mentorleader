@@ -1,5 +1,6 @@
 import {getAuth, signOut} from 'firebase/auth';
 import { CardBanner } from '../components/CardBanner/CardBanner';
+import { Footer } from '../components/Footer/Footer';
 import { Header } from '../components/Header/Header';
 
 export const Home = () => {
@@ -9,6 +10,7 @@ export const Home = () => {
         <Header/>
         <CardBanner/>
         <button onClick={() => signOut(auth)}>Deslogar</button>
+        <Footer/>
     </>
     
 }
