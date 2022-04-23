@@ -12,7 +12,7 @@ export const Header = () => {
     <Container>
         <ContentHeader>
         <h1>
-            <Link to="/home">
+            <Link to="/">
                 Mentores On
             </Link>
         </h1>
