@@ -1,6 +1,7 @@
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { ReactNode, useEffect, useState } from "react"
+import { ReactNode, useContext, useEffect } from "react"
 import { useNavigate } from "react-router-dom";
+import { AuthContextApi } from "../context/authenticate";
 
 interface PrivateRouteProps {
     children: ReactNode;
@@ -8,24 +9,21 @@ interface PrivateRouteProps {
 export const PrivateRoute = ({children}: PrivateRouteProps) => {
     const auth = getAuth();
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(false);
+
+    const { signed } = useContext(AuthContextApi)
 
     useEffect(() => {
-        AuthCheck();
-        return () => AuthCheck();
-    }, [auth]);
-
-    const AuthCheck = onAuthStateChanged(auth, (user) => {
-        if(user) {
-            setLoading(false)
-        } else {
-            console.log('unauthorized');
-            navigate('/login')
+        if(signed){
+            onAuthStateChanged(auth, (user) => {
+                if(user) {
+                   navigate('/') 
+                } else {
+                    navigate('/login')  
+                }
+            })
         }
-    });
+    },[auth, navigate, signed])
 
-    if (loading) return <p>Loaging...</p>
-    
     return<>
         {children}
     </>

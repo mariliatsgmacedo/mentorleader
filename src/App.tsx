@@ -7,10 +7,10 @@ import { GlobalStyle } from './styles/global';
 initializeApp(config.firebase);
 
 function App() {
- 
+
   return <>
-    <GeneralRoutes/>
-    <GlobalStyle/>
+    <GeneralRoutes />
+    <GlobalStyle />
   </>;
 }
 

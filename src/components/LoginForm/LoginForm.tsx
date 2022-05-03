@@ -1,37 +1,18 @@
-import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Container, Form, Landing } from './style';
 import IconLock from '../../assets/icon-lock.svg';
 import LoginImage from '../../assets/login-image.svg';
-
+import { useAuthenticate } from '../../context/authenticate';
 interface IFormInput {
     email: string;
     password: string;
 }
 
 export const LoginForm = () => {
-
-    const auth = getAuth();
-    const navigate = useNavigate();
-    const [authorize, setAuthorize] = useState(false);
+    const { signInGoogle } = useAuthenticate()
     const { register, formState: { errors }, handleSubmit } = useForm<IFormInput>();
+
     const onSubmit: SubmitHandler<IFormInput> = data => console.log(data);
-
-    const signInWithGoogle = async () => {
-        setAuthorize(true);
-
-        signInWithPopup(auth, new GoogleAuthProvider())
-            .then((res) => {
-                console.log(res.user.uid);
-                navigate('/')
-            })
-            .catch((err) => {
-                console.log(err);
-                setAuthorize(false);
-            })
-    }
 
     return <>
         <Container>
@@ -53,7 +34,7 @@ export const LoginForm = () => {
                     {errors.password && "O campo Password é obrigatório"}
                 </div>
                 <br />
-                <button type='submit' onClick={() => signInWithGoogle()} disabled={authorize}>Sign in with google</button>
+                <button type="button" onClick={signInGoogle} >Sign in with google</button>
                 <button className='buttonEnter' type='submit' onClick={handleSubmit(onSubmit)}>Sign in</button>
             </Form>
 
@@ -61,3 +42,5 @@ export const LoginForm = () => {
     </>
 
 }
+
+

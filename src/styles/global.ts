@@ -1,9 +1,9 @@
 import { createGlobalStyle } from 'styled-components';
-import { convert } from '../utils/pixels-convert';
 
 export const GlobalStyle = createGlobalStyle`
  :root {
         --background-html: #F0F2F5;
+        --background-modal: #f5f5f5;
         --primary-color:#821284;
 
         --light-font-white:#f7f7f7;
@@ -24,15 +24,6 @@ export const GlobalStyle = createGlobalStyle`
             font-size: 87.5% ; //14px
         }
     }
-    /* html{
-        font-size: ${convert(24)};
-        @media(max-width: 768px){
-            font-size: ${convert(18)};
-        }
-        @media(max-width: 1024px){
-            font-size: ${convert(16)};
-        }
-    } */
     body {
         background: var(--background-html) ;
         -webkit-font-smoothing: antialiased;
@@ -45,6 +36,28 @@ export const GlobalStyle = createGlobalStyle`
     
     button {
         cursor: pointer;
+    }
+
+    //Modal Style
+
+    .react-override-modal {
+        background: rgba(0,0,0,0.5);
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .react-modal-content{
+        width: 100%;
+        max-width: 700px;
+        padding: 3rem;
+        background: var(--background);
+        position: relative;
+        border-radius: 0.25rem;
     }
 
 `;
