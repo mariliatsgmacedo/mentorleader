@@ -1,7 +1,7 @@
 import { ContainerFooter, Content } from "./styles"
 import IconLinkedin from '../../assets/icon-linkedin.svg';
-import IconInstagram from '../../assets/icon-instagram.svg';
 import IconGithub from '../../assets/icon-github.svg';
+import IconInstagram from '../../assets/icon-instagram.svg';
 
 export const Footer = () => {
 

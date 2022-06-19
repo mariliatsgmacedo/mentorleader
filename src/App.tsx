@@ -1,15 +1,13 @@
 import React from 'react';
-import { initializeApp } from 'firebase/app';
-import { config } from "../src/config/config";
-import { GeneralRoutes } from './routes/route';
+import Modal from 'react-modal';
 import { GlobalStyle } from './styles/global';
+import { IndexRoutes } from './routes';
 
-initializeApp(config.firebase);
+Modal.setAppElement('#root');
 
 function App() {
-
   return <>
-    <GeneralRoutes />
+    <IndexRoutes />
     <GlobalStyle />
   </>;
 }
