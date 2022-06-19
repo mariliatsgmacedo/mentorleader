@@ -30,7 +30,7 @@ export const Home = () => {
         <Typography align='center' variant='h5'>Mentores Disponíveis</Typography>
         <MentorListCard onMentorModalIsOpen={handleModalOpen}  />
         <BannerFixed />
-        <ModalMentor isOpen={open} onRequestClose={handleModalClose} />
+     
         <Footer />
         <Outlet />
     </>

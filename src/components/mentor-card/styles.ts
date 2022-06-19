@@ -59,6 +59,8 @@ export const Cards = styled.article`
     width: 20%;
     border-radius: 0.25rem;
     margin-right: 1rem;
+    padding: 16px;
+    
 
     img {
         max-width: 70%;

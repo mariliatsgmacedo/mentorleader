@@ -10,6 +10,7 @@ import { IReadUserDto, ISkill, IUser } from "../../model/model";
 import { getSkills, getSkillsFilteredByName, updateUser } from "../../services/firebase/firebase";
 import { isString } from "formik";
 import { capitalize } from "../../utils/text-utils";
+import { LoadingButton } from "@mui/lab";
 
 const useStyles = makeStyles({
     container: {
@@ -44,6 +45,7 @@ export const UserForm = () => {
     const [open, setOpen] = useState(false);
     const [inputValue, setInputValue] = useState('');
     const [loading, setLoading] = useState(false);
+    const [saveLoading, setSaveLoading] = useState(false);
 
     const [user, setUser] = useState<IReadUserDto>({ ...cUser } as IReadUserDto)
     const [skillFilter, setSkillFilter] = useState<readonly ISkill[]>([])
@@ -58,7 +60,7 @@ export const UserForm = () => {
     useEffect(() => {
         let active = true;
 
-        if ( !inputValue) {
+        if (!inputValue) {
             return undefined;
         }
         setLoading(true)
@@ -70,15 +72,17 @@ export const UserForm = () => {
         return () => {
             active = false;
         };
-    }, [ inputValue]);
+    }, [inputValue]);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setUser({ ...user, isMentor: event.target.checked })
     };
 
     const handleSave = async (e: FormEvent) => {
+        setSaveLoading(true)
         console.log('passando aqui no handle save', user);
         e.preventDefault()
+        
         try {
             let result = await updateUser(user, skills)
             if (result) {
@@ -87,8 +91,10 @@ export const UserForm = () => {
             } else {
                 alert("Fudeo!! verifique seus dados")
             }
+            setSaveLoading(false)
         } catch (err) {
             alert(err)
+            setSaveLoading(false)
         }
     }
 
@@ -158,10 +164,12 @@ export const UserForm = () => {
                         value.map((option, index: number) => (
                             <Chip
                                 variant="outlined"
-                                sx={{'&.MuiChip-label' : {
-                                    textTransform: 'capitalize'
-                                }}}
-                                label={capitalize(option.name || option.toString())} 
+                                sx={{
+                                    '&.MuiChip-label': {
+                                        textTransform: 'capitalize'
+                                    }
+                                }}
+                                label={capitalize(option.name || option.toString())}
                                 {...getTagProps({ index })} />
                         ))
                     }
@@ -182,7 +190,7 @@ export const UserForm = () => {
                         />
                     )}
                 />
-                <TextField fullWidth type="text" label="Linkedin" margin="dense" value={user.linkedinURI || ''}  onChange={(e) => setUser({ ...user, linkedinURI: e.target.value })} />
+                <TextField fullWidth type="text" label="Linkedin" margin="dense" value={user.linkedinURI || ''} onChange={(e) => setUser({ ...user, linkedinURI: e.target.value })} />
                 <TextField fullWidth type="text" label="Github" margin="dense" value={user.githubURI || ''} onChange={(e) => setUser({ ...user, githubURI: e.target.value })} />
 
                 {/* <input
@@ -218,7 +226,7 @@ export const UserForm = () => {
                         />
                     }
                 />
-                <Button fullWidth variant="outlined" type="submit" onClick={handleSave}>Salvar</Button>
+                <LoadingButton loading={saveLoading} loadingPosition="start"  fullWidth variant="outlined" type="submit" onClick={handleSave}>Salvar</LoadingButton>
                 {/* <button type="submit" onClick={handleSave} >Salvar</button> */}
             </ContentMentorForm>
         </Container>

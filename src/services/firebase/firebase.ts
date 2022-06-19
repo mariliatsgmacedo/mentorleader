@@ -126,17 +126,31 @@ async function getUserSkills(userId: string): Promise<IUserSkill[]> {
     return docs.docs.map(item => ({ ...item.data(), docRef: item.id } as IUserSkill));
     // return []
 }
-export const getAllMentors = async ({ start, limit: limitPage = 10 }: Pagination = {}): Promise<IUser[]> => {
+export const getAllMentors = async ({ start, limit: limitPage = 10, query: textQuery }: Pagination = {}): Promise<IUser[]> => {
     var constraints = [
         where("isMentor", "==", true),
-        // orderBy("name"),
-        limit(limitPage),
+        orderBy("name"),
     ]
+
+    if(limitPage !== -1){
+        constraints.push(
+            limit(limitPage)
+        )
+    }
+
+    if(!!textQuery){
+        constraints.push(
+            startAt(textQuery), 
+            endAt(`${textQuery}\uf8ff`)
+        )
+    }
+
     if (start) {
         constraints.push(
             startAt(start)
         )
     }
+
     const ment = query(collection(db, Tables.USERS), ...constraints)
     const querSnap = await getDocs(ment)
     return querSnap.docs.map((doc) => ({ ...doc.data(), docRef: doc.id } as IUser))

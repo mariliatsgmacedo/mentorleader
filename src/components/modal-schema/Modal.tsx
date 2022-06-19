@@ -3,23 +3,20 @@ import ImgPhoto from "../../assets/no-photo.svg";
 import IconLinkedin from '../../assets/icon-linkedin.svg';
 import IconGithub from '../../assets/icon-github.svg';
 import Modal from 'react-modal';
-import { Divider } from "@mui/material";
+import { Divider, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { collection, DocumentData, onSnapshot } from "firebase/firestore";
 import { Tables } from "../../enums";
 import { db } from "../../config/firebase-config";
+import { IReadUserDto } from "../../model/model";
+import { capitalize } from "../../utils/text-utils";
 
 interface ModalProps {
     isOpen: boolean;
     onRequestClose: () => void;
+    user: IReadUserDto;
 }
-export const ModalMentor = ({ isOpen, onRequestClose }: ModalProps) => {
-    const [list, setList] = useState<DocumentData[]>([])
-
-    useEffect(
-        () => onSnapshot(collection(db, Tables.USERS), (snap) => {
-            setList(snap.docs.map((doc) => ({ ...doc.data(), iddoc: doc.id })))
-        }), [])
+export const ModalMentor = ({ isOpen, onRequestClose, user }: ModalProps) => {
 
     return <>
         <Modal
@@ -30,36 +27,36 @@ export const ModalMentor = ({ isOpen, onRequestClose }: ModalProps) => {
         >
             <ContainerModal>
                 <Content>
-                    {
-                        list.map((item) => (
-                            <Header key={item.iddoc}>
-                                <img className="profile" src={item?.photo ? item?.photo : ImgPhoto} alt="Foto de usuario default" />
-                                <div className="mentor-info">
-                                    <h3>{item?.name}</h3>
-                                    <p>{item?.occupation}</p>
-                                    <p>{item?.email}</p>
-                                    <div className="is-enable">
-                                        <div className="point"></div>
-                                        <p className="enable">Estou disponível</p>
-                                    </div>
-                                </div>
-                                <div className="mentor-links">
-                                    <a href="www.linkedin.com">
-                                        <img src={IconLinkedin} alt="" />
-                                    </a>
-                                    <a href="www.github.com">
-                                        <img src={IconGithub} alt="" />
-                                    </a>
-                                </div>
-                            </Header>
-                        ))
-                    }
+                    <Header key={user.docRef}>
+                        <img className="profile" src={user?.photo ? user?.photo : ImgPhoto} alt="Foto de usuario default" />
+                        <div className="mentor-info">
+                            <h3>{user?.name}</h3>
+                            <p>{user?.occupation}</p>
+                            <p>{user?.email}</p>
+                            <Stack direction="row" className="mentor-links" spacing={1}>
+                                {!user.linkedinURI || <a href={user.linkedinURI} target="_blank" rel="noreferrer">
+                                    <img src={IconLinkedin} alt="linkedin icon" />
+                                </a>}
+
+                                {!user.githubURI || <a href={user.githubURI} target="_blank" rel="noreferrer">
+                                    <img src={IconGithub} alt="github icon"/>
+                                </a>}
+                            </Stack>
+
+                            <div className="is-enable">
+                                <div className="point"></div>
+                                <p className="enable">Estou disponível</p>
+                            </div>
+                        </div>
+
+                    </Header>
                     <Divider />
                     <List>
-                        <li>Java</li>
-                        <li>React</li>
-                        <li>Typescript</li>
-                        <li>Javascript</li>
+                        {
+                            user.skills.map(item => (
+                                <li key={item.docRef}>{capitalize(item.name)}</li>
+                            ))
+                        }
                     </List>
                     <Divider />
                 </Content>

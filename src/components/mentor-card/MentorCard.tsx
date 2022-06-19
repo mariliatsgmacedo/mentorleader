@@ -6,18 +6,17 @@ import { collection, DocumentData, onSnapshot } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../config/firebase-config";
 import { Tables } from "../../enums";
-import { ISkill, IUser } from "../../model/model";
+import { IReadUserDto, ISkill, IUser } from "../../model/model";
 import { getSkills } from "../../services/firebase/firebase";
 import { capitalize } from "../../utils/text-utils";
 
 interface MentorCardProps {
     user: IUser;
-    onClick: () => void;
+    onClick: (user: IReadUserDto) => void;
 }
 export const MentorCard = ({ user, onClick }: MentorCardProps) => {
     const [skills, setSkills] = useState<ISkill[]>([]);
     const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();
 
     useEffect(() => {
         getSkills(user.docRef).then((list) => {
@@ -28,13 +27,17 @@ export const MentorCard = ({ user, onClick }: MentorCardProps) => {
         })
     }, [])
 
+    const handleClick = () => {
+        let readDto = {...user, skills: skills} as IReadUserDto
+        onClick(readDto)
+    }
     const displaySkills = useCallback(() => {
         if (loading) {
             return 'Carregando...'
         } else if (skills.length === 0) {
             return 'Sem skills por aqui. =/'
         } else {
-            return skills.map(item=> capitalize(item.name)).join(', ')
+            return skills.map(item => capitalize(item.name)).join(', ')
         }
     }, [loading, skills])
 
@@ -43,7 +46,7 @@ export const MentorCard = ({ user, onClick }: MentorCardProps) => {
             <img src={user.photo ? user.photo : ImgPhoto} alt="Imagem do mentor" />
             <h4>{`${user.name.split(' ')[0]} ${user.name.split(' ').slice(-1).join(' ')}`}</h4>
             <p>{displaySkills()}</p>
-            <button type="button" onClick={onClick}> {'Ver mais'}</button>
+            <button type="button" onClick={handleClick}> {'Ver mais'}</button>
         </Cards>
 
     </>

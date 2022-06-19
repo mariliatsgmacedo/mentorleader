@@ -4,7 +4,7 @@ import styled from "styled-components";
 export const ContainerModal = styled.main`
     background: var(--background-modal);
     border-radius: 4px;
-    padding: 1rem;
+    padding: 2rem;
 
     .container-buttons{
         display: flex;
@@ -56,7 +56,7 @@ export const Content = styled.section`
 
 export const Header = styled.header`
     display: grid;
-    grid-template-columns: auto 2fr 1fr;
+    grid-template-columns: auto 2fr;
     justify-items: center;
     align-items: center;
     padding-bottom: 1rem;
@@ -65,6 +65,7 @@ export const Header = styled.header`
     .profile{
         width: 12rem;
         text-align: center;
+        border-radius: 6px;
     }
     .mentor-info {
         line-height: 2rem;
@@ -117,6 +118,8 @@ export const List = styled.ul`
     justify-content: start;
     margin-top: 1rem;
     margin-bottom:1rem ;
+    flex-wrap: wrap;
+    gap: 8px;
 
     li {
       padding: 0.5rem 1rem;
