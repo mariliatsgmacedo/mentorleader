@@ -1,9 +1,11 @@
 import { Container, ContentForm, Landing } from './style';
 import IconLock from '../../assets/icon-lock.svg';
 import LoginImage from '../../assets/login-image.svg';
+import {ReactComponent as IconGoogle} from '../../assets/google.svg'
 import { useAuth } from '../../hooks/useAuth';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
+import { Button } from '@mui/material';
 
 const InputForm = Yup.object().shape({
     email: Yup.string().email('Ivalid Email').required('Required'),
@@ -49,7 +51,8 @@ export const LoginForm = () => {
 
             <img src={IconLock} alt="Icone de cadeado" />
             <p>Entre com as suas credenciais para acessar a sua conta</p>
-            <button type="button" onClick={signInWithGoogle} >Sign in with Google</button>
+            <Button variant='outlined' startIcon={<IconGoogle/>} onClick={signInWithGoogle}>Entrar com o Google</Button>
+            {/* <button type="button" onClick={signInWithGoogle} >Sign in with Google</button> */}
             {/* <button className='btn-microsoft' type="button" onClick={() => alert()} >Sign in with Microsoft</button> */}
             </ContentForm>
 

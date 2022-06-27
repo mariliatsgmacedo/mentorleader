@@ -1,5 +1,5 @@
 import { User } from 'firebase/auth';
-import { addDoc, collection, deleteDoc, doc, DocumentData, endAt, Firestore, getDoc, getDocs, limit, orderBy, query, startAt, Timestamp, updateDoc, where } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, DocumentData, endAt, getDoc, getDocs, limit, orderBy, query, startAt, Timestamp, updateDoc, where } from 'firebase/firestore';
 import { auth, db } from '../../config/firebase-config';
 import { Tables } from '../../enums';
 import { CreateSkillDto, IReadUserDto, ISkill, IUpdateUserDto, IUser, IUserSkill } from '../../model/model';

@@ -84,7 +84,7 @@ export const ContentForm = styled.form`
     font-size: 1rem;
   }
 
-  button{
+  /* button{
     width: 57%;
     border-radius: 4px;
     border: 1px solid red;
@@ -103,7 +103,7 @@ export const ContentForm = styled.form`
     color: var(--primary-color);
     cursor: pointer;
     background: transparent;
-  }
+  } */
 
   /* .buttonEnter {
     border-radius: 4px;

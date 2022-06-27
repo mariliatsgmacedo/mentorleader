@@ -1,7 +1,6 @@
-import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import { getRedirectResult, GoogleAuthProvider, signInWithPopup, signInWithRedirect, signOut } from "firebase/auth";
 import { createContext, ReactNode, useEffect, useMemo, useState } from "react";
 import { auth } from "../config/firebase-config";
-import { Local } from "../enums";
 import { IReadUserDto, IUser } from "../model/model";
 import { createUser, getUserAuth, getUserInfo } from "../services/firebase/firebase";
 
@@ -32,58 +31,66 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
     useEffect(() => {
         //Delay para esperar firebase carregar
-        setTimeout( ()=> init(), 800);
+        setTimeout(() => init(), 800);
     }, [])
 
-    async function loadUserInfo(): Promise<Boolean>{
+    async function loadUserInfo(): Promise<Boolean> {
         let userAuth = await getUserAuth()
         if (userAuth) {
             let userInfo = await getUserInfo(userAuth.uid)
-            if(userInfo){
+            if (userInfo) {
                 setUser(userInfo)
                 return true
             }
-        } 
+        }
 
         return false;
     }
 
-    // useEffect(() => {
-    //     const unsubscribe = auth.onAuthStateChanged(userLogged => {
-    //         if(userLogged) {
-    //             const { displayName, email, photoURL, uid } = userLogged
-    //             if (!displayName || !photoURL) {
-    //                 throw new Error('Missing information from Google Account')
-    //             }
-    //             setInitialLoading(false);
-    //             const user = {
-    //                 name: displayName,
-    //                 email: email,
-    //                 id: uid,
-    //                 photo: photoURL,
-    //             } as IUser
-    //             setUser(user)
-    //             createUser(db, "users", user)
-    //         }
-    //     })
-    //     return () => {
-    //         unsubscribe()
-    //     }
-    // },[])
-
     const signInWithGoogle = async () => {
+        // setInitialLoading(true)
+        // console.log('entrou aqui');
+
+        // const provider = new GoogleAuthProvider();
+        // console.log(provider);
+
+        // let popupResolve = await signInWithRedirect(auth, provider);
+        // await getRedirectResult(auth, popupResolve)
+        //     .then(async (result) => {
+        //         var user = {
+        //             name: result?.user.displayName,
+        //             email: result?.user.email,
+        //             uid: result?.user.uid,
+        //             photo: result?.user.photoURL,
+        //         } as unknown as IUser
+
+        //         let _user = await createUser(user)
+        //         console.log(_user);
+
+        //         setUser(_user);
+        //         // setInitialLoading(false)
+
+        //     })
+        //     .catch((error) => {
+        //         const err = error.code;
+        //         const errMsg = error.message;
+        //         console.log(err);
+        //         console.log(errMsg);
+
+        //     })
+
         setInitialLoading(true)
         const provider = new GoogleAuthProvider();
         const response = await signInWithPopup(auth, provider);
         const { displayName, email, photoURL, uid } = response.user
-        
+
         var user = {
             name: displayName,
             email,
             uid,
             photo: photoURL,
         } as unknown as IUser
-        
+
         let _user = await createUser(user)
         setUser(_user);
         setInitialLoading(false)
@@ -91,7 +98,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
     const logoutGoogle = () => {
         setUser(undefined)
-        localStorage.clear()
         return signOut(auth);
     }
 
@@ -111,5 +117,3 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     )
 
 }
-
-// export const useAuth = () => useContext(AuthContext)
