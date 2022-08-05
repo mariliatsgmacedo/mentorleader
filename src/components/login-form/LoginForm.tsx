@@ -51,7 +51,7 @@ export const LoginForm = () => {
 
             <img src={IconLock} alt="Icone de cadeado" />
             <p>Entre com as suas credenciais para acessar a sua conta</p>
-            <Button variant='outlined' startIcon={<IconGoogle/>} onClick={signInWithGoogle}>Entrar com o Google</Button>
+            <Button data-cy='signWithGoogleDataCy' variant='outlined' startIcon={<IconGoogle/>} onClick={signInWithGoogle}>Entrar com o Google</Button>
             {/* <button type="button" onClick={signInWithGoogle} >Sign in with Google</button> */}
             {/* <button className='btn-microsoft' type="button" onClick={() => alert()} >Sign in with Microsoft</button> */}
             </ContentForm>
