@@ -1,4 +1,4 @@
-describe('Open Lista Mentores page', () => {
+describe('Open Mentor List page', () => {
   beforeEach(() => {
     cy.openPage(Cypress.env('qa_server'));
   });
@@ -7,7 +7,7 @@ describe('Open Lista Mentores page', () => {
     cy.login();
   });
 
-  it('2 - Click on lista mentores button', () => {
-    cy.getlistaMentoresButton().click();
+  it('2 - Click on Mentor List button', () => {
+    cy.getMentorListButton().click();
   });
 });

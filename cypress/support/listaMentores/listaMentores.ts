@@ -1,3 +1,3 @@
-Cypress.Commands.add('getlistaMentoresButton', () => {
+Cypress.Commands.add('getMentorListButton', () => {
   return cy.get('[data-cy=listaMentoresbtn]');
 });
