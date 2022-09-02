@@ -22,13 +22,13 @@ export const Header = () => {
                 </h1>
                 <div>
                     <nav>
-                        <Link to="/mentors">
+                        <Link data-cy="listaMentoresbtn" to="/mentors">
                             Lista Mentores
                         </Link>
-                        <Link to="/profile">
+                        <Link data-cy="profilebtn" to="/profile">
                             Perfil
                         </Link>
-                        <button type="button" onClick={handleLogout}>
+                        <button data-cy="logoutbtn" type="button" onClick={handleLogout}>
                             <ExitToAppIcon />
                         </button>
                     </nav>

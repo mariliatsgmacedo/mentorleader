@@ -17,6 +17,7 @@
 import './commands';
 import './login/login';
 import './logout/logout';
+import './listaMentores/listaMentores';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
